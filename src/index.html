@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Task Manager</title>
+    <!-- <link rel="stylesheet" href="//fonts.googleapis.com/css?family=font1|font2|etc" type="text/css">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="./styles/style.css" type="text/css">
+</head>
+<body>
+<div class="mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Task Manager</span>
+            <nav class="mdl-navigation">
+                <!--<a class="mdl-navigation__link" href="">Link</a>-->
+            </nav>
+        </div>
+    </header>
+
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <div class="container">
+                <h1> Task Manager </h1>
+                <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                        <h1 class="mdl-card__title-text">Task Register</h1>
+                    </div>
+                    <form id="taskInputForm" class="task-form" action="#">
+                        <div class="task-form-group">
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <textarea class="mdl-textfield__input extrawide desc-text-area" rows= "5" id="taskDescription" ></textarea>
+                                <label class="mdl-textfield__label" for="taskDescription">Task Description...</label>
+                            </div>
+                        </div>
+                        <div class="task-form-group">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label task-form-group">
+                                <input class="mdl-textfield__input" type="text" id="taskAssign">
+                                <label class="mdl-textfield__label" for="taskAssign">Assign to...</label>
+                            </div>
+                        </div>
+                        <div class="task-form-group">
+                                <h5 class="">Priority</h5>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="low">
+                                    <input type="radio" id="low" class="mdl-radio__button" name="options" value="low">
+                                    <span class="mdl-radio__label">Low</span>
+                                </label>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mid">
+                                    <input type="radio" id="mid" class="mdl-radio__button" name="options" value="mid" checked>
+                                    <span class="mdl-radio__label">Mid</span>
+                                </label>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="high">
+                                    <input type="radio" id="high" class="mdl-radio__button" name="options" value="high">
+                                    <span class="mdl-radio__label">HIGH</span>
+                                </label>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button class="mdl-button mdl-js-button mdl-button--raised">
+                                Register task
+                            </button>
+                        </div>
+                        <div class="mdl-card__menu">
+                        </div>
+                    </form>
+                </div>
+                <div id="taskDisplayContainer">
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</div>
+
+
+<script type="text/javascript">
+    function autorun()
+    {
+
+    }
+    if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+    else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+    else window.onload = autorun;
+</script>
+
+<script type="module" src="./scripts/main.js"></script>
+<script type="module" src="./scripts/task.js"></script>
+
+<script src="https://chancejs.com/chance.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
