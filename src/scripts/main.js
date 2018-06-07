@@ -2,22 +2,69 @@
  * Created by Michael M. Simon on 6/7/2018.
  */
 import Task from './task.js';
+import DataService from '../services/data.service.js';
+import Inputs from '../lib/viewLib.js';
 
+(()=> {
+   // getTasks();
 
-(function () {
-   let t = new Task(123, 'title', 'desc', 'high', 'Mike', 'done');
-   let id = t.getId('123');
-   let title = t.getTitle();
-   let desc = t.getDesc('Some description');
+    let elements = {
+        taskDisplay: document.getElementById('taskDisplayContainer'),
+        saveButton: document.getElementById('taskInputForm'),
+        description: document.getElementById('taskDescription'),
+        assignTo: document.getElementById('taskAssignTo'),
+        title: document.getElementById('taskTitle'),
+        priority: document.getElementsByName('options')
 
-   console.log(id + title + desc);
+    };
 
+    elements.saveButton.addEventListener('submit', storeTask);
+    function storeTask(e) {
+        e.preventDefault();
+        let title = elements.title.value;
+        let desc = elements.description.value;
+        let assignedTo = elements.assignTo.value;
+        let priority = Inputs.getSelectedOption(elements.priority);
+
+        console.log(title + desc + assignedTo + priority);
+    }
+
+    function getTasks() {
+        let tasks = DataService.getTasks();
+        let task = new Task();
+
+        for (let i=0; i < tasks.length; i++) {
+            task.setId(tasks[i].$id);
+            task.setTitle(tasks[i].$title);
+            task.setDesc(tasks[i].$description);
+            task.setAssignedTo(tasks[i].$assignedTo);
+            task.setStatus(tasks[i].$status);
+            task.setPriority(tasks[i].$priority);
+
+            // Generate UI task view
+            createTaskView(
+                task.getId(),
+                task.getTitle(),
+                task.getDesc(),
+                task.getPriority(),
+                task.getAssignedTo(),
+                task.getStatus()
+            );
+        }
+    }
+
+    function createTaskView(id,title,desc,priority,assignedTo,status) {
+        elements.taskDisplay.innerHTML = '';
+        elements.taskDisplay.innerHTML +=
+            '<div class="holder">'+
+            '<h6>'+'Task Id:' + id + '</h6>'+
+            '<h3>'+ title +'</h3>'+
+            '<p>' + desc +'</p>'+
+            '<p>' + priority +'</p>'+
+            '<p>' + assignedTo +'</p>'+
+            '<p>' + status +'</p>'+
+            '</div>'
+    }
 })();
 
-function getTasks() {
-    let tasks = JSON.parse(localStorage.getItem('tasks'));
-    let taskDisplay = document.getElementById('taskDisplayContainer');
 
-
-    taskDisplay.innerHTML = '';
-}

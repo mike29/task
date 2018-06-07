@@ -29,7 +29,7 @@
                     <div class="mdl-card__title">
                         <h1 class="mdl-card__title-text">Task Register</h1>
                     </div>
-                    <form id="taskInputForm" class="task-form" action="#">
+                    <form id="taskInputForm" class="task-form">
                         <div class="task-form-group">
                             <div class="mdl-textfield mdl-js-textfield">
                                 <textarea class="mdl-textfield__input extrawide desc-text-area" rows= "5" id="taskDescription" ></textarea>
@@ -38,8 +38,14 @@
                         </div>
                         <div class="task-form-group">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label task-form-group">
-                                <input class="mdl-textfield__input" type="text" id="taskAssign">
-                                <label class="mdl-textfield__label" for="taskAssign">Assign to...</label>
+                                <input class="mdl-textfield__input" type="text" id="taskAssignTo">
+                                <label class="mdl-textfield__label" for="taskAssignTo">Assign to...</label>
+                            </div>
+                        </div>
+                        <div class="task-form-group">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label task-form-group">
+                                <input class="mdl-textfield__input" type="text" id="taskTitle">
+                                <label class="mdl-textfield__label" for="taskTitle">Title...</label>
                             </div>
                         </div>
                         <div class="task-form-group">
@@ -60,7 +66,7 @@
                         <div class="mdl-card__supporting-text">
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-                            <button class="mdl-button mdl-js-button mdl-button--raised">
+                            <button class="mdl-button mdl-js-button mdl-button--raised" type="submit" id="storeTaskBtn">
                                 Register task
                             </button>
                         </div>
@@ -88,8 +94,11 @@
     else window.onload = autorun;
 </script>
 
-<script type="module" src="./scripts/main.js"></script>
+
+<script type="module" src="./lib/viewLib.js"></script>
 <script type="module" src="./scripts/task.js"></script>
+<script type="module" src="./services/data.service.js"></script>
+<script type="module" src="./scripts/main.js"></script>
 
 <script src="https://chancejs.com/chance.min.js"></script>
 </body>
