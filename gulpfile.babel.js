@@ -10,10 +10,7 @@ import del from 'del';
 
 let gulp = require('gulp');
 let babel = require('gulp-babel');
-let gls = require('gulp-live-server');
 
-
-const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 let configuration = {

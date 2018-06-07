@@ -5,8 +5,13 @@ import Task from './task.js';
 
 
 (function () {
-    let x = "Hello!!";      // I will invoke myself
-    console.log(x);
+   let t = new Task(123, 'title', 'desc', 'high', 'Mike', 'done');
+   let id = t.getId('123');
+   let title = t.getTitle();
+   let desc = t.getDesc('Some description');
+
+   console.log(id + title + desc);
+
 })();
 
 function getTasks() {
