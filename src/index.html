@@ -23,7 +23,6 @@
     <main class="mdl-layout__content">
         <div class="page-content">
             <div class="container">
-                <h1> Task Manager </h1>
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <div class="mdl-card__title">
                         <h1 class="mdl-card__title-text">Task Register</h1>
@@ -31,7 +30,7 @@
                     <form id="taskInputForm" class="task-form">
                         <div class="task-form-group">
                             <div class="mdl-textfield mdl-js-textfield">
-                                <textarea class="mdl-textfield__input extrawide desc-text-area" rows= "5" id="taskDescription" ></textarea>
+                                <textarea class="mdl-textfield__input extrawide desc-text-area" rows= "3" id="taskDescription" ></textarea>
                                 <label class="mdl-textfield__label" for="taskDescription">Task Description...</label>
                             </div>
                         </div>
@@ -91,6 +90,7 @@
     else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
     else window.onload = autorun;
 </script>
+
 <script type="module" src="./lib/viewLib.js"></script>
 <script type="module" src="./scripts/task.js"></script>
 <script type="module" src="./services/data.service.js"></script>

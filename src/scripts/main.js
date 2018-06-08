@@ -7,7 +7,6 @@ import View from '../lib/viewLib.js';
 
 
 (()=> {
-   // getTasks();
 
     let elements = {
         taskDisplay: document.getElementById('taskDisplayContainer'),
@@ -17,6 +16,8 @@ import View from '../lib/viewLib.js';
         title: document.getElementById('taskTitle'),
         priority: document.getElementsByName('options')
     };
+
+    getTasks();
 
     elements.saveForm.addEventListener('submit', storeTask);
     function storeTask(e) {
@@ -36,8 +37,9 @@ import View from '../lib/viewLib.js';
         newTask.setStatus('open');
 
         let vv = [];
+        elements.taskDisplay.innerHTML = '';
         if(localStorage.getItem('tasks') === null) {
-                vv.push(newTask.getAllTasks());
+            vv.push(newTask.getAllTasks());
             localStorage.setItem('tasks', JSON.stringify(vv));
         }
         else {
@@ -58,15 +60,18 @@ import View from '../lib/viewLib.js';
 
     function getTasks() {
         let tasks = DataService.getTasks();
-        let task = new Task();
+        let elem = elements.taskDisplay;
 
+        tasks = tasks.reverse();
         for (let i=0; i < tasks.length; i++) {
-            task.setId(tasks[i].$id);
-            task.setTitle(tasks[i].$title);
-            task.setDesc(tasks[i].$description);
-            task.setAssignedTo(tasks[i].$assignedTo);
-            task.setStatus(tasks[i].$status);
-            task.setPriority(tasks[i].$priority);
+            let task = new Task();
+            console.log(tasks[i][1]);
+            task.setId(tasks[i][0]);
+            task.setTitle(tasks[i][1]);
+            task.setDesc(tasks[i][2]);
+            task.setAssignedTo(tasks[i][4]);
+            task.setStatus(tasks[i][5]);
+            task.setPriority(tasks[i][3]);
 
             // Generate UI task view
             View.createTaskView(
@@ -76,7 +81,7 @@ import View from '../lib/viewLib.js';
                 task.getPriority(),
                 task.getAssignedTo(),
                 task.getStatus(),
-                elements.taskDisplay
+                elem
             );
         }
     }

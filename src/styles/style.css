@@ -3,12 +3,19 @@ body {
     position: relative;
 }
 .page-content {
-    padding: 2%;
-    width: 60%;
+    padding: 15px;
     margin: auto;
+    width: 60%;
 }
 .demo-card-wide {
     background-color: #e1e1e1;
+}
+.mdl-card__title {
+    background-color: #414141;
+    color: #e9e9e9;
+}
+.mdl-card__title-text {
+    color:#e1e1e1 ;
 }
 .mdl-textfield {
     width:100%;
@@ -23,7 +30,7 @@ body {
     background-color: #AA3939;
 }
 .demo-card-wide.mdl-card {
-    width: 70%;
+    width: 100%;
 }
 .demo-card-wide > .mdl-card__title {
     color: #1e1e1e;
@@ -32,3 +39,35 @@ body {
 .demo-card-wide > .mdl-card__menu {
     color: #1e1e1e;
 }
+.holder {
+    margin-top: 40px;
+    background-color: #474747;
+    color: #e1e1e1;
+    padding: 10px;
+}
+.mdl-card__supporting-text  {
+    color: #e9e9e9;
+}
+.itemsBody {
+    background-color: #4f4f4f;
+}
+.itemsMenu p {
+    margin: 15px 10px auto auto;
+    color: #e9e9e9;
+}
+.dataSpan {
+    display: inline-flex;
+}
+.dataText {
+    margin-right: 15px;
+}
+.dataIcon {
+    margin-right: 5px;
+}
+.itemMenuHeader {
+    display: block;
+}
+.dataClose i{
+    color: #e9e9e9;
+}
+

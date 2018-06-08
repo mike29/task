@@ -1,6 +1,7 @@
 /**
  * Created by Michael M. Simon on 6/7/2018.
  */
+let exports = {};
 class Task {
     constructor(id, title, desc, priority, assignedTo, status) {
         let _id = id;
@@ -36,4 +37,4 @@ class Task {
 
     }
 }
-export { Task as default}
+export {Task as default}
