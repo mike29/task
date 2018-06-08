@@ -15,7 +15,7 @@ module.exports = (router) => {
         let year = dateObject.getUTCFullYear();
         let date = day + "." + (month + 1) + "." + year;
 
-        console.log(req.body.data.title + " " + req.body.data.author + ' ' + req.body.data.contentType);
+      //  console.log(req.body.data.title + " " + req.body.data.author + ' ' + req.body.data.contentType);
         let newTask = new Task({
             content: req.body.data,
             title: req.body.title,
@@ -36,6 +36,7 @@ module.exports = (router) => {
                 res.json({success: true, message: 'Task added'});
             }
         });
+
     });
 
     router.get('/add', (req, res) => {
@@ -48,7 +49,7 @@ module.exports = (router) => {
             status: String,
             date: String
         });
-
+        console.log("rote add called");
         Task.find().exec(function(err, content){
             if(err){
                 res.status(500);
@@ -79,4 +80,5 @@ module.exports = (router) => {
             res.json(deletedContent);
         });
     });
+    return router;
 };
