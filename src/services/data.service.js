@@ -22,5 +22,13 @@ class DataService {
         }
 
     }
+
+    static  deleteTask(tasks, task) {
+    let index = tasks.indexOf(task);
+    if (index > -1) {
+        tasks.splice(index, 1);
+    }
+    return true;
+    }
 }
 export { DataService as default}

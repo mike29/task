@@ -18,54 +18,55 @@ import View from '../lib/viewLib.js';
     };
 
     // fetch all tasks
-    getTasks();
+    fetchTasks();
 
     // Add kart added
     elements.saveForm.addEventListener('submit', storeTask);
     function storeTask(e) {
         e.preventDefault();
-        let $id = chance.guid();
-        let $title = elements.title.value;
-        let $desc = elements.description.value;
-        let $assignedTo = elements.assignTo.value;
-        let $priority = View.getSelectedOption(elements.priority);
+        elements.taskDisplay.innerHTML = '';
 
         let newTask = new Task();
-        newTask.setId($id);
-        newTask.setTitle($title);
-        newTask.setDesc($desc);
-        newTask.setPriority($priority);
-        newTask.setAssignedTo($assignedTo);
+        newTask.setId(chance.guid());
+        newTask.setTitle(elements.title.value);
+        newTask.setDesc(elements.description.value);
+        newTask.setPriority(View.getSelectedOption(elements.priority));
+        newTask.setAssignedTo(elements.assignTo.value);
         newTask.setStatus('open');
 
-        let holdFetchedDataTemp = [];
-        elements.taskDisplay.innerHTML = '';
+        let dataInserted = insertData(newTask);
+        if (dataInserted) {
+            elements.saveForm.reset();
+            fetchTasks();
+        }
+        else {
+            alert('Saving failed! try again');
+        }
+    }
+
+    function insertData(data) {
         let dataAddress = localStorage.getItem('tasks');
+        let holdFetchedDataTemp = [];
+
         if(dataAddress === null) {
-            holdFetchedDataTemp.push(newTask.getAllTasks());
+            holdFetchedDataTemp.push(data.getAllTasks());
             DataService.setTasks(holdFetchedDataTemp);
+            return true;
         }
         else {
             try{
-                let tasks = DataService.getTasks();
-                    tasks.push(newTask.getAllTasks());
-                    DataService.setTasks(tasks);
+                holdFetchedDataTemp = DataService.getTasks();
+                holdFetchedDataTemp.push(data.getAllTasks());
+                DataService.setTasks(holdFetchedDataTemp);
+                return true;
             }
             catch (e) {
                 console.log(e.message);
+                return false;
             }
         }
-        elements.saveForm.reset();
-        getTasks();
     }
 
-    function deleteTask(tasks, task) {
-        let index = tasks.indexOf(task);
-        if (index > -1) {
-            tasks.splice(index, 1);
-        }
-        return true;
-    }
     function userConfirmed(message) {
         let r = confirm(message);
         return r === true;
@@ -76,24 +77,22 @@ import View from '../lib/viewLib.js';
             let tasks = JSON.parse(localStorage.getItem('tasks'));
             for (let i=0; i< tasks.length; i++) {
                 if (tasks[i][0].includes(tobeDeletedID)) {
-                        console.log(tasks.indexOf(tasks[i]));
-                         deleteTask(tasks, tasks[i]);
-                }
-                else {
-
+                    //console.log(tasks.indexOf(tasks[i]));
+                    DataService.deleteTask(tasks,tasks[i]);
                 }
             }
-            DataService.setTasks(tasks)
+            DataService.setTasks(tasks);
         }
     }
 
-    function getTasks() {
+    function fetchTasks() {
         let tasks =DataService.getTasks();
         let elem = elements.taskDisplay;
 
         if (DataService.getTasks() !== null ) {
             tasks = tasks.reverse();
             for (let i=0; i < tasks.length; i++) {
+                // Create task "instance"
                 let task = new Task();
                 task.setId(tasks[i][0]);
                 task.setTitle(tasks[i][1]);
