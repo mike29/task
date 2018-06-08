@@ -3,30 +3,57 @@
  */
 import Task from './task.js';
 import DataService from '../services/data.service.js';
-import Inputs from '../lib/viewLib.js';
+import View from '../lib/viewLib.js';
+
 
 (()=> {
    // getTasks();
 
     let elements = {
         taskDisplay: document.getElementById('taskDisplayContainer'),
-        saveButton: document.getElementById('taskInputForm'),
+        saveForm: document.getElementById('taskInputForm'),
         description: document.getElementById('taskDescription'),
         assignTo: document.getElementById('taskAssignTo'),
         title: document.getElementById('taskTitle'),
         priority: document.getElementsByName('options')
-
     };
 
-    elements.saveButton.addEventListener('submit', storeTask);
+    elements.saveForm.addEventListener('submit', storeTask);
     function storeTask(e) {
         e.preventDefault();
-        let title = elements.title.value;
-        let desc = elements.description.value;
-        let assignedTo = elements.assignTo.value;
-        let priority = Inputs.getSelectedOption(elements.priority);
+        let $id = chance.guid();
+        let $title = elements.title.value;
+        let $desc = elements.description.value;
+        let $assignedTo = elements.assignTo.value;
+        let $priority = View.getSelectedOption(elements.priority);
 
-        console.log(title + desc + assignedTo + priority);
+        let newTask = new Task();
+        newTask.setId($id);
+        newTask.setTitle($title);
+        newTask.setDesc($desc);
+        newTask.setPriority($priority);
+        newTask.setAssignedTo($assignedTo);
+        newTask.setStatus('open');
+
+        let vv = [];
+        if(localStorage.getItem('tasks') === null) {
+                vv.push(newTask.getAllTasks());
+            localStorage.setItem('tasks', JSON.stringify(vv));
+        }
+        else {
+            try{
+                let tasks = DataService.getTasks();
+                    tasks.push(newTask.getAllTasks());
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+            catch (e) {
+                console.log(e.message);
+            }
+
+        }
+        elements.saveForm.reset();
+        getTasks();
+
     }
 
     function getTasks() {
@@ -42,29 +69,19 @@ import Inputs from '../lib/viewLib.js';
             task.setPriority(tasks[i].$priority);
 
             // Generate UI task view
-            createTaskView(
+            View.createTaskView(
                 task.getId(),
                 task.getTitle(),
                 task.getDesc(),
                 task.getPriority(),
                 task.getAssignedTo(),
-                task.getStatus()
+                task.getStatus(),
+                elements.taskDisplay
             );
         }
     }
 
-    function createTaskView(id,title,desc,priority,assignedTo,status) {
-        elements.taskDisplay.innerHTML = '';
-        elements.taskDisplay.innerHTML +=
-            '<div class="holder">'+
-            '<h6>'+'Task Id:' + id + '</h6>'+
-            '<h3>'+ title +'</h3>'+
-            '<p>' + desc +'</p>'+
-            '<p>' + priority +'</p>'+
-            '<p>' + assignedTo +'</p>'+
-            '<p>' + status +'</p>'+
-            '</div>'
-    }
+
 })();
 
 

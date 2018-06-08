@@ -1,10 +1,7 @@
 /**
  * Created by Michael M. Simon on 6/8/2018.
  */
-
-
-class Inputs {
-
+class View {
     static getSelectedOption (optionElement) {
         for (let i = 0, length = optionElement.length; i < length; i++)
         {
@@ -14,5 +11,18 @@ class Inputs {
             }
         }
     }
+
+    static createTaskView(id,title,desc,priority,assignedTo,status, viewElement) {
+        viewElement.innerHTML = '';
+        viewElement.innerHTML +=
+        '<div class="holder">'+
+        '<h6>'+'Task Id:' + id + '</h6>'+
+        '<h3>'+ title +'</h3>'+
+        '<p>' + desc +'</p>'+
+        '<p>' + priority +'</p>'+
+        '<p>' + assignedTo +'</p>'+
+        '<p>' + status +'</p>'+
+        '</div>'
+    }
 }
-export { Inputs as default}
+export { View as default}

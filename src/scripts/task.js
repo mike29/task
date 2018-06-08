@@ -10,23 +10,30 @@ class Task {
         let _assignedTo = assignedTo;
         let _status = status;
 
-        this.setId = function(id) { _id = id};
+        let _allTasks= [] ;
+
+        this.setId = function(id) { _id = id; _allTasks.push(id)};
         this.getId = function() { return _id;};
 
-        this.setTitle = function(desc) { _title = desc};
+        this.setTitle = function(title) { _title = title; _allTasks.push(title)};
         this.getTitle = function() { return _title;};
 
-        this.setDesc = function(desc) { _desc = desc};
+        this.setDesc = function(desc) { _desc = desc; _allTasks.push(desc)};
         this.getDesc = function() { return _desc;};
 
-        this.setPriority = function(priority) { _priority = priority};
+        this.setPriority = function(priority) { _priority = priority; _allTasks.push(priority)};
         this.getPriority = function() { return _priority;};
 
-        this.setAssignedTo = function(assignedTo) { _assignedTo = assignedTo};
+        this.setAssignedTo = function(assignedTo) { _assignedTo = assignedTo; _allTasks.push(assignedTo)};
         this.getAssignedTo = function() { return _assignedTo;};
 
-        this.setStatus = function(status) { _status = status};
+        this.setStatus = function(status) { _status = status; _allTasks.push(status)};
         this.getStatus = function() { return _status;};
+
+        this.getAllTasks = function() {
+            return _allTasks;
+        };
+
     }
 }
 export { Task as default}
