@@ -44,5 +44,10 @@ class View {
             '</div>' +
             '</div>'
     }
+
+    static userConfirm (message) {
+    let r = confirm(message);
+    return r === true;
+    }
 }
 export { View as default}
