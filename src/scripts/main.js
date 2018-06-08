@@ -120,7 +120,7 @@ import View from '../lib/viewLib.js';
         let IndexOfHiddenID = 0;
 
         while(element){
-            if(element.nodeName === "BUTTON" && /dataClose/ .test(element.className)){
+            if(element.nodeName === "BUTTON" && /dataDelete/ .test(element.className)){
                 let isConfirmed = userConfirmed('Confirm delete');
                 if(isConfirmed) {
                     element.parentNode.parentNode.style.display = 'none';
@@ -133,7 +133,9 @@ import View from '../lib/viewLib.js';
                     findTaskById(collectChilds[IndexOfHiddenID]);
                     break;
                 }
-
+            }
+            else if (element.nodeName === "BUTTON" && /dataClose/ .test(element.className)) {
+                element.parentNode.parentNode.style.display = 'none';
             }
             element = element.parentNode;
         }

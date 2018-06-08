@@ -25,11 +25,17 @@ class View {
                     '<p class="dataText">'+ assignedTo +'</p>'+
                     '<i class="material-icons dataIcon">check_circle</i>'+
                     '<p class="dataText">' + status +'</p>'+
-                '</span>'+
+                    '<i class="material-icons dataIcon">edit</i>'+
+                    '<p class="dataText">' + 'Edit' +'</p>'+
+                '</span><br/>'+
+
         '</div>'+
             '<div class="mdl-card__menu itemsMenu">'+
+                '<button class="mdl-button mdl-js-button dataDelete">'+
+                    '<i class="material-icons">delete</i>'+
+                '</button>'+
                 '<button class="mdl-button mdl-js-button dataClose">'+
-                    '<i class="material-icons">close</i>'+
+                '<i class="material-icons">close</i>'+
                 '</button>'+
             '</div>'+
             '<div class="mdl-card__actions itemsBody mdl-card--border">'+
