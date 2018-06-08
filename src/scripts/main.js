@@ -17,8 +17,10 @@ import View from '../lib/viewLib.js';
         priority: document.getElementsByName('options')
     };
 
+    // fetch all tasks
     getTasks();
 
+    // Add kart added
     elements.saveForm.addEventListener('submit', storeTask);
     function storeTask(e) {
         e.preventDefault();
@@ -36,55 +38,106 @@ import View from '../lib/viewLib.js';
         newTask.setAssignedTo($assignedTo);
         newTask.setStatus('open');
 
-        let vv = [];
+        let holdFetchedDataTemp = [];
         elements.taskDisplay.innerHTML = '';
-        if(localStorage.getItem('tasks') === null) {
-            vv.push(newTask.getAllTasks());
-            localStorage.setItem('tasks', JSON.stringify(vv));
+        let dataAddress = localStorage.getItem('tasks');
+        if(dataAddress === null) {
+            holdFetchedDataTemp.push(newTask.getAllTasks());
+            DataService.setTasks(holdFetchedDataTemp);
         }
         else {
             try{
                 let tasks = DataService.getTasks();
                     tasks.push(newTask.getAllTasks());
-                localStorage.setItem('tasks', JSON.stringify(tasks));
+                    DataService.setTasks(tasks);
             }
             catch (e) {
                 console.log(e.message);
             }
-
         }
         elements.saveForm.reset();
         getTasks();
+    }
 
+    function deleteTask(tasks, task) {
+        let index = tasks.indexOf(task);
+        if (index > -1) {
+            tasks.splice(index, 1);
+        }
+        return true;
+    }
+    function userConfirmed(message) {
+        let r = confirm(message);
+        return r === true;
+    }
+    // Find the selected item id
+    function findTaskById (tobeDeletedID) {
+        if(DataService.getTasks() !== null) {
+            let tasks = JSON.parse(localStorage.getItem('tasks'));
+            for (let i=0; i< tasks.length; i++) {
+                if (tasks[i][0].includes(tobeDeletedID)) {
+                        console.log(tasks.indexOf(tasks[i]));
+                         deleteTask(tasks, tasks[i]);
+                }
+                else {
+
+                }
+            }
+            DataService.setTasks(tasks)
+        }
     }
 
     function getTasks() {
-        let tasks = DataService.getTasks();
+        let tasks =DataService.getTasks();
         let elem = elements.taskDisplay;
 
-        tasks = tasks.reverse();
-        for (let i=0; i < tasks.length; i++) {
-            let task = new Task();
-            console.log(tasks[i][1]);
-            task.setId(tasks[i][0]);
-            task.setTitle(tasks[i][1]);
-            task.setDesc(tasks[i][2]);
-            task.setAssignedTo(tasks[i][4]);
-            task.setStatus(tasks[i][5]);
-            task.setPriority(tasks[i][3]);
+        if (DataService.getTasks() !== null ) {
+            tasks = tasks.reverse();
+            for (let i=0; i < tasks.length; i++) {
+                let task = new Task();
+                task.setId(tasks[i][0]);
+                task.setTitle(tasks[i][1]);
+                task.setDesc(tasks[i][2]);
+                task.setAssignedTo(tasks[i][4]);
+                task.setStatus(tasks[i][5]);
+                task.setPriority(tasks[i][3]);
 
-            // Generate UI task view
-            View.createTaskView(
-                task.getId(),
-                task.getTitle(),
-                task.getDesc(),
-                task.getPriority(),
-                task.getAssignedTo(),
-                task.getStatus(),
-                elem
-            );
+                // Generate UI task view
+                View.createTaskView(task.getId(),task.getTitle(),task.getDesc(),
+                    task.getPriority(),task.getAssignedTo(),task.getStatus(),elem
+                    );
+            }
         }
     }
+
+    // Delete Click handler
+    // TODO
+    // Find a shorter way of getting the ID
+    elements.taskDisplay.addEventListener('click', (event)=> {
+        event = event || window.event;
+        let element = event.target || event.srcElement;
+        let parentOfIdHolderElement = '';
+        let IndexOfHiddenID = 0;
+
+        while(element){
+            if(element.nodeName === "BUTTON" && /dataClose/ .test(element.className)){
+                let isConfirmed = userConfirmed('Confirm delete');
+                if(isConfirmed) {
+                    element.parentNode.parentNode.style.display = 'none';
+                    parentOfIdHolderElement = element.parentNode.parentNode.childNodes;
+                    let collectChilds =[];
+                    for (let i = 0; i < parentOfIdHolderElement.length; i++) {
+                        // Get the first child (the hidden id of span)
+                        collectChilds.push(parentOfIdHolderElement[i].firstChild.nodeValue);
+                    }
+                    findTaskById(collectChilds[IndexOfHiddenID]);
+                    break;
+                }
+
+            }
+            element = element.parentNode;
+        }
+    })
 
 
 })();

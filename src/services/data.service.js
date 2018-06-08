@@ -12,5 +12,15 @@ class DataService {
         }
 
     }
+
+    static setTasks(value) {
+        try {
+            return  localStorage.setItem('tasks', JSON.stringify(value));
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+
+    }
 }
 export { DataService as default}

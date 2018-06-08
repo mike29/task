@@ -15,8 +15,9 @@ class View {
     static createTaskView(id,title,desc,priority,assignedTo,status, viewElement) {
         viewElement.innerHTML +=
         '<div class="demo-card-wide mdl-card mdl-shadow--2dp holder">'+
+        '<span class="hidden">' + id + '</span>'+
             '<div class="mdl-card__supporting-text itemMenuHeader">'+
-                '<h6>'+'ID: ' + id + '</h6>'+
+                '<h6 id="itemID">'+'ID: ' + id + '</h6>'+
                 '<span class="dataSpan" >'+
                     '<i class="material-icons dataIcon">low_priority</i>'+
                     '<p class="dataText">'+ priority +'</p>'+
